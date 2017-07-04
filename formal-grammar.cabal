@@ -1,0 +1,46 @@
+name:                formal-grammar
+
+-- The package version.  See the Haskell package versioning policy (PVP) 
+-- for standards guiding when and how versions should be incremented.
+-- https://wiki.haskell.org/Package_versioning_policy
+-- PVP summary:      +-+------- breaking API changes
+--                   | | +----- non-breaking API additions
+--                   | | | +--- code changes with no API change
+version:             0.1.0.0
+
+synopsis:            A Hsakell implementation of Chomsky's formal grammars.
+
+description:         A formal grammar over an alphabet (some set of symbols) is essentially a definition of what is a valid string of symbols and what isn't--in a way that is computable by a Turing machine. Noam Chomsky discovered a relatively simple way to specify any formal grammar. Basically, one makes a set of "production rules" which turn one string of symbols (both terminal and non-terminal) into another; by applying these rules to a designated "start" symbol, every valid string can be computed. See the README (or Wikipedia) for a more rigorous mathematical definition.
+
+license:             PublicDomain
+
+author:              greatBigDot
+
+maintainer:          figueroa.johnm@gmail.com
+
+category:            Math
+
+build-type:          Simple
+
+extra-source-files:  ChangeLog.md
+
+-- Constraint on the version of Cabal needed to build this package.
+cabal-version:       >=1.10
+
+library
+  -- Modules exported by the library.
+  exposed-modules:     Data.ContextFree
+  
+  -- Modules included in this library but not exported.
+  -- other-modules:       
+  
+  -- LANGUAGE extensions used by modules in this package.
+  -- other-extensions:    
+  
+  -- Other library packages from which modules are imported.
+  build-depends:       base >=4.9 && <4.10
+  
+  hs-source-dirs:      src
+  
+  default-language:    Haskell2010
+  
