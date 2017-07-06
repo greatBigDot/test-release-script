@@ -71,7 +71,7 @@ limitedReduce :: Int -> [Rule] -> Phrase -> [Phrase]
 limitedReduce limit rs ph
   | isDone ph && (size > limit) = []
   | isDone ph                   = [ph]
-  | otherwise                   = concatMap (reduce rs) (derive rs' ph)
+  | otherwise                   = concatMap (limitedReduce limit rs) (derive rs' ph)
   where size = case ph of Phrase ph' -> length ph'
         rs'  = filter (\r -> size + diff r <= limit) rs
 
