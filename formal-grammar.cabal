@@ -6,7 +6,7 @@ name:                formal-grammar
 -- PVP summary:      +-+------- breaking API changes
 --                   | | +----- non-breaking API additions
 --                   | | | +--- code changes with no API change
-version:             0.1.1.1
+version:             0.1.1.2
 
 synopsis:            A Hsakell implementation of Chomsky's formal grammars.
 

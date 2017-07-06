@@ -41,7 +41,7 @@ isDone :: Phrase -> Bool
 isDone = all isTerminal . symbols
 
 
---replaces the nth element of xs with ys; expand [30,20,10] [0..10] 7 ==> [0,1,2,3,4,5,30,20,10,8,9,10]
+--replaces the nth element of xs with ys; expand [30,20,10] [0..10] 7 ==> [0,1,2,3,4,5,30,20,10,7,8,9,10]
 expand :: [a] -> [a] -> Int -> [a]
 expand ys xs n =
   let xs' = splitAt n xs in
@@ -76,7 +76,7 @@ limitedReduce limit rs ph
         rs'  = filter (\r -> size + diff r <= limit) rs
 
 diff :: Rule -> Int
-diff (Rule (_,Phrase body)) = length body - 1
+diff (Rule (_,Phrase body)) = count isTerminal body - 1
 
 start :: Symbol
 start = NonTerminal "S"
@@ -94,3 +94,11 @@ whenIs :: (a -> Bool) -> [a] -> [Int]
 whenIs _ []     = []
 whenIs p (x:xs) = if p x then 0:rest else rest
   where rest = map (+1) (whenIs p xs)
+
+count :: (a -> Bool) -> [a] -> Int
+count p []     = 0
+count p (x:xs) = fromBool (p x) + count p xs
+
+fromBool :: Bool -> Int
+fromBool True  = 1
+fromBool False = 0
