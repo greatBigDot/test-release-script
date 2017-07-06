@@ -2,26 +2,31 @@ module Data.ContextFree
   ( Symbol(Terminal, NonTerminal)
   , Phrase(Phrase)
   , Rule
-  , rule
+  , mkRule
   , isTerminal
-  , apply
-  , derive
-  , reduce
+  , apply, derive
+  , reduce, limitedReduce
+  , start
   ) where
 
 data Symbol = Terminal String | NonTerminal String deriving Eq
 newtype Phrase = Phrase { symbols :: [Symbol] } deriving Eq
-newtype Rule  = Rule (Symbol,Phrase) deriving (Eq,Show)
+newtype Rule  = Rule (Symbol,Phrase) deriving Eq
 
 instance Show Symbol where
   show (Terminal s) = s
   show (NonTerminal s) = s
 
 instance Show Phrase where
-  show = concat . map show . symbols
+  show = concatMap show . symbols
 
-rule :: (Symbol,Phrase) -> Rule
-rule specs
+instance Show Rule where
+  show (Rule (hd,body)) = "(" ++ show hd ++ ") --> (" ++ show body ++ ")"
+
+-- rHead :: Rule -> Symbol
+
+mkRule :: (Symbol,Phrase) -> Rule
+mkRule specs
   | isValidRule specs = Rule specs
   | otherwise         = error "Invalid rule specification."
 
@@ -53,18 +58,33 @@ apply (Rule r) (Phrase ph) =
 derive :: [Rule] -> Phrase -> [Phrase]
 derive rs ph
   | isDone ph = [ph]
-  | otherwise = concat . map (flip apply ph) $ rs
+  | otherwise = concatMap (flip apply ph) rs
 
 reduce :: [Rule] -> Phrase -> [Phrase]
 reduce rs ph
   | isDone ph = [ph]
-  | otherwise = concat . map (reduce rs) $ (derive rs ph)
+  | otherwise = concatMap (reduce rs) (derive rs ph)
+
+-- not actually part of formal grammars, but makes my life roughly infinity% easier
+-- TODO: move to a different module for extensions to the mathematical formalisms.
+limitedReduce :: Int -> [Rule] -> Phrase -> [Phrase]
+limitedReduce limit rs ph
+  | isDone ph && (size > limit) = []
+  | isDone ph                   = [ph]
+  | otherwise                   = concatMap (reduce rs) (derive rs' ph)
+  where size = case ph of Phrase ph' -> length ph'
+        rs'  = filter (\r -> size + diff r <= limit) rs
+
+diff :: Rule -> Int
+diff (Rule (_,Phrase body)) = length body - 1
+
+start :: Symbol
+start = NonTerminal "S"
 
 {- --for testing in ghci
-start,a,b :: Symbol
+a,b :: Symbol
 a = Terminal "a"
 b = Terminal "b"
-start = NonTerminal "S"
 r1,r2 :: Rule
 r1 = rule (start,Phrase [a,start,b])
 r2 = rule (start,Phrase [a,b])
