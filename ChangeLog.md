@@ -65,3 +65,13 @@ Testing release script [#10] (or maybe not)
 ## 0.2.3.1 -- 2017-07-12
 
 Testing release script [#11] (getting closer...)
+    
+    
+## 0.3.0.0 -- 2017-07-12
+
+Testing release script [#12] (it basically works now)
+    
+    
+## 0.3.1.0 -- 2017-07-12
+
+Testing release script [#13]
