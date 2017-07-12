@@ -75,3 +75,8 @@ Testing release script [#12] (it basically works now)
 ## 0.3.1.0 -- 2017-07-12
 
 Testing release script [#13]
+    
+    
+## 0.3.2.0 -- 2017-07-12
+
+Testing release script [#14]
