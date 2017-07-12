@@ -80,3 +80,13 @@ Testing release script [#13]
 ## 0.3.2.0 -- 2017-07-12
 
 Testing release script [#14]
+    
+    
+## 0.3.3.0 -- 2017-07-12
+
+Testing release script [#14]
+    
+    
+## 0.3.4.0 -- 2017-07-12
+
+Testing release script [#15]
