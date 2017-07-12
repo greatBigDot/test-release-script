@@ -6,9 +6,9 @@ name:                formal-grammar
 -- PVP summary:      +-+------- breaking API changes
 --                   | | +----- non-breaking API additions
 --                   | | | +--- code changes with no API change
-version:             0.1.1.2
+version:             0.2.3.1
 
-synopsis:            A Hsakell implementation of Chomsky's formal grammars.
+synopsis:            A Haskell implementation of Chomsky's formal grammars.
 
 description:         A formal grammar over an alphabet (some set of symbols) is essentially a definition of what is a valid string of symbols and what isn't--in a way that is computable by a Turing machine. Noam Chomsky discovered a relatively simple way to specify any formal grammar. Basically, one makes a set of "production rules" which turn one string of symbols (both terminal and non-terminal) into another; by applying these rules to a designated "start" symbol, every valid string can be computed. See the README (or Wikipedia) for a more rigorous mathematical definition.
 
@@ -22,7 +22,7 @@ category:            Math
 
 build-type:          Simple
 
-extra-source-files:  ChangeLog.md
+extra-source-files:  *.md
 
 -- Constraint on the version of Cabal needed to build this package.
 cabal-version:       >=1.10
@@ -44,3 +44,4 @@ library
   
   default-language:    Haskell2010
   
+ 

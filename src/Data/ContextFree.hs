@@ -4,8 +4,9 @@ module Data.ContextFree
   , Rule
   , mkRule
   , isTerminal
-  , apply, derive
-  , reduce, limitedReduce
+  , apply, derive, reduceBy
+  , reduce
+  , limitedReduce
   , start
   ) where
 
@@ -60,10 +61,29 @@ derive rs ph
   | isDone ph = [ph]
   | otherwise = concatMap (flip apply ph) rs
 
+reduceBy :: Int -> [Rule] -> Phrase -> [Phrase]
+reduceBy 0 _  = (:[])
+reduceBy n rs = if_ isDone (:[]) (concatMap (reduceBy (n-1) rs) . derive rs)
+
+{-
+  \ph ->  (isDone ph)
+  | (isDone) = []
+  | otherwise  = concatMap (reduceBy (n-1) rs) . (derive rs)
+-}
 reduce :: [Rule] -> Phrase -> [Phrase]
 reduce rs ph
   | isDone ph = [ph]
   | otherwise = concatMap (reduce rs) (derive rs ph)
+
+--like if, except the test case is a predicate and not a proposition.
+if_ :: (a -> Bool) -> (a -> b) -> (a -> b) -> (a -> b)
+if_ p x y =
+  \t -> case p t of True  -> x t
+                    False -> y t
+
+if' :: Bool -> a -> a -> a
+if' True x _  = x
+if' False _ y = y
 
 -- not actually part of formal grammars, but makes my life roughly infinity% easier
 -- TODO: move to a different module for extensions to the mathematical formalisms.
