@@ -90,3 +90,8 @@ Testing release script [#14]
 ## 0.3.4.0 -- 2017-07-12
 
 Testing release script [#15]
+    
+    
+## 0.3.5.0 -- 2017-07-12
+
+Testing release script [#15]
